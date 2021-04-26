@@ -10,7 +10,7 @@ app.set('view engine', 'handlebars')
 
 
 app.get('/', (req, res) => {
-  res.send('server sucess')
+  res.render('index')
 })
 
 
