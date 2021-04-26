@@ -12,18 +12,27 @@
   </div>
 
   {{!-- restaurant card below --}}
-  <div class="row justify-content-center text-center" id="restaurant-cards">
+  <div class="row" id="restaurant-cards">
     {{#each restaurants}}
     <div class="col-3 mt-3">
-      <a href="" class="text-dark">
-        <div class="card mb-2" >
+      <a href="/restaurants/{{ this.id }}" class="text-dark">
+        <div class="card mb-2">
           <img class="card-img-top" src={{ this.image }}>
           <div class="card-body">
             <h5 class="card-title">{{ this.name }}</h5>
+            <div class="row">
+              <div class="col-12">
+                <span><strong>分類: </strong>{{ this.category }}</span>
+              </div>
+              <div class="col-12">
+                <span><strong>評分: </strong>{{ this.rating }}</span>
+              </div>
+            </div>
           </div>
         </div>
+      </a>
     </div>
-    </a>
+
     {{/each}}
   </div>
 

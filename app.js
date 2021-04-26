@@ -16,6 +16,13 @@ app.get('/', (req, res) => {
   res.render('index', { restaurants: restaurantList.results })
 })
 
+app.get('/restaurants/:restaurant_id', (req, res) => {
+  const restaurantAfterFind = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
+
+  console.log(restaurantAfterFind)
+  res.render('show', { restaurant: restaurantAfterFind })
+})
+
 
 app.listen(port, () => {
   console.log(`Listen to the http://localhost:${port}`)

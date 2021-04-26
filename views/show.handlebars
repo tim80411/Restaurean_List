@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <div class="row justify-content-center text-left">
+    <div class="col-6 mb-3">
+      <div>
+        <span><strong>類別： </strong>{{ restaurant.category }}</span>
+      </div>
+      <div>
+        <span><strong>地址： </strong><a href="https://goo.gl/maps/BJdmLuVdDbw">{{ restaurant.location }}</a></span>
+      </div>
+      <div>
+        <span><strong>電話： </strong><a href="tel:02 2363 8009">{{ restaurant.phone }}</a></span>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center text-center">
+    <div class="col-6">
+      <p>
+        {{ restaurant.description }}
+      </p>
+      <img src={{ restaurant.image }} alt="" class="img-fluid" >
+    </div>
+  </div>
+</div>
+
+{{!-- style="outline: 1px solid;" --}}
