@@ -42,9 +42,12 @@ app.get('/', (req, res) => {
 
 // detail route
 app.get('/restaurants/:restaurant_id/detail', (req, res) => {
-  const restaurantAfterFind = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
+  const id = req.params.restaurant_id
 
-  res.render('show', { restaurant: restaurantAfterFind })
+  Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('show', { restaurant }))
+    .catch(error => console.error(error))
 })
 
 // route: Add restaurant function
@@ -74,8 +77,9 @@ app.post('/restaurants', (req, res) => {
 
 // search route
 app.get('/search', (req, res) => {
-  const restaurantsAfterSearch = restaurantList.results.filter(restaurant => restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase()))
-  res.render('index', { restaurants: restaurantsAfterSearch })
+  const keyword = req.query.keyword
+  const restaurantsAfterSearch = restaurantList.results.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()))
+  res.render('index', { restaurants: restaurantsAfterSearch, keyword })
 })
 
 
