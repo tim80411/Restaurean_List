@@ -13,34 +13,35 @@
 
   {{!-- restaurant card below --}}
   <div class="row" id="restaurant-cards">
-    {{#each restaurants}}
-    <div class="col-3 mt-3">
-      <a href="/restaurants/{{ this._id }}/detail" class="text-dark">
-        <div class="card mb-2">
-          <img class="card-img-top" style="height: 130px" src={{ this.image }}>
-          <div class="card-body">
-            <h5 class="card-title">{{ this.name }}</h5>
-            <div class="row">
-              <div class="col-12">
-                <span><strong>分類: </strong>{{ this.category }}</span>
-              </div>
-              <div class="col-12">
-                <span><strong>評分: </strong>{{ this.rating }}</span>
+    <div class="col-md-10 col-12 mx-auto">
+      <div class="card-columns mt-3">
+        {{#each restaurants}}
+        <a href="/restaurants/{{ this._id }}/detail" class="text-dark">
+          <div class="card mb-4 shadow rounded rounded-large">
+            <img class="card-img-top rounded rounded-large" style="height: 130px" src={{ this.image }}>
+            <div class="card-body">
+              <h5 class="card-title">{{ this.name }}</h5>
+              <div class="row">
+                <div class="col-12">
+                  <span><strong>分類: </strong>{{ this.category }}</span>
+                </div>
+                <div class="col-12">
+                  <span><strong>評分: </strong>{{ this.rating }}</span>
+                </div>
               </div>
             </div>
+            <div class="card-footer text-right px-1">
+              <a href="/restaurants/{{ this._id }}/edit" class="btn btn-primary">Edit</a>
+              <a href="/restaurants/{{ this._id }}/detail" class="btn btn-info">Detail</a>
+              <form action="/restaurants/{{ this._id }}/delete" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
           </div>
-          <div class="card-footer text-right px-1">
-            <a href="/restaurants/{{ this._id }}/edit" class="btn btn-primary">Edit</a>
-            <a href="/restaurants/{{ this._id }}/detail" class="btn btn-info">Detail</a>
-            <form action="/restaurants/{{ this._id }}/delete" method="POST" style="display: inline;">
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-          </div>
-        </div>
-      </a>
+        </a>
+        {{/each}}
+      </div>
     </div>
-
-    {{/each}}
   </div>
 
 </div>

@@ -3,8 +3,6 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
-const restaurantList = require('./models/seeds/restaurant.json')
-
 
 const app = express()
 const port = 3000
@@ -119,8 +117,14 @@ app.post('/restaurants/:restaurant_id/delete', (req, res) => {
 // search route
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
-  const restaurantsAfterSearch = restaurantList.results.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()))
-  res.render('index', { restaurants: restaurantsAfterSearch, keyword })
+
+  return Restaurant.find()
+    .lean()
+    .then(restaurants => {
+      const restaurantsAfterSearch = restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()))
+      res.render('index', { restaurants: restaurantsAfterSearch, keyword })
+    })
+    .catch(error => console.error(error))
 })
 
 
