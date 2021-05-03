@@ -10,7 +10,7 @@ const app = express()
 const port = 3000
 
 // connect mongodb and set up db's listener
-mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 
 const db = mongoose.connection
 
@@ -105,6 +105,14 @@ app.post('/restaurants/:restaurant_id/edit', (req, res) => {
       return restaurant.save()
     })
     .then(() => res.redirect(`/restaurants/${id}/detail`))
+    .catch(error => console.error(error))
+})
+
+// route: delete restaurant function
+app.post('/restaurants/:restaurant_id/delete', (req, res) => {
+  const id = req.params.restaurant_id
+  return Restaurant.findByIdAndRemove(id)
+    .then(() => res.redirect('/'))
     .catch(error => console.error(error))
 })
 
