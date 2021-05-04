@@ -43,16 +43,7 @@ app.get('/restaurants/new', (req, res) => {
 })
 
 app.post('/restaurants', (req, res) => {
-  const id = Number(req.body.id)
-  const name = req.body.name
-  const name_en = req.body.name_en
-  const category = req.body.category
-  const image = req.body.image
-  const location = req.body.lccation
-  const phone = req.body.phone
-  const google_map = req.body.google_map
-  const rating = Number(req.body.rating)
-  const description = req.body.description
+  const { id, name, name_en, category, image, location, phone, google_map, rating, description } = req.body
 
   return Restaurant.create({
     id, name, name_en, category, image, location, phone, google_map, rating, description
@@ -94,7 +85,7 @@ app.post('/restaurants/:restaurant_id/edit', (req, res) => {
       restaurant.name_en = req.body.name_en
       restaurant.category = req.body.category
       restaurant.image = req.body.image
-      restaurant.location = req.body.lccation
+      restaurant.location = req.body.location
       restaurant.phone = req.body.phone
       restaurant.google_map = req.body.google_map
       restaurant.rating = Number(req.body.rating)
@@ -122,7 +113,8 @@ app.get('/search', (req, res) => {
     .lean()
     .then(restaurants => {
       const restaurantsAfterSearch = restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()))
-      res.render('index', { restaurants: restaurantsAfterSearch, keyword })
+      const isFind = restaurantsAfterSearch === 0
+      res.render('index', { restaurants: restaurantsAfterSearch, keyword, isFind })
     })
     .catch(error => console.error(error))
 })
