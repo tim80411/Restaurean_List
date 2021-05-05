@@ -16,7 +16,6 @@ db.once('open', () => {
   console.log('mongodb sucess!')
   restaurants.forEach(restaurant => {
     Restaurant.create({
-      id: restaurant.id,
       name: restaurant.name,
       name_en: restaurant.name_en,
       category: restaurant.category,

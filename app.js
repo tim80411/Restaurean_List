@@ -43,10 +43,10 @@ app.get('/restaurants/new', (req, res) => {
 })
 
 app.post('/restaurants', (req, res) => {
-  const { id, name, name_en, category, image, location, phone, google_map, rating, description } = req.body
+  const { name, name_en, category, image, location, phone, google_map, rating, description } = req.body
 
   return Restaurant.create({
-    id, name, name_en, category, image, location, phone, google_map, rating, description
+    name, name_en, category, image, location, phone, google_map, rating, description
   })
     .then(() => res.redirect('/'))
     .catch(error => console.error(error))
@@ -58,7 +58,10 @@ app.get('/restaurants/:restaurant_id/detail', (req, res) => {
 
   return Restaurant.findById(id)
     .lean()
-    .then(restaurant => res.render('show', { restaurant }))
+    .then(restaurant => {
+      const isFindGoogleMap = restaurant.google_map
+      res.render('show', { restaurant, isFindGoogleMap })
+    })
     .catch(error => console.error(error))
 })
 
@@ -80,7 +83,6 @@ app.post('/restaurants/:restaurant_id/edit', (req, res) => {
   const id = req.params.restaurant_id
   return Restaurant.findById(id)
     .then(restaurant => {
-      restaurant.id = Number(req.body.id)
       restaurant.name = req.body.name
       restaurant.name_en = req.body.name_en
       restaurant.category = req.body.category
@@ -113,8 +115,8 @@ app.get('/search', (req, res) => {
     .lean()
     .then(restaurants => {
       const restaurantsAfterSearch = restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()))
-      const isFind = restaurantsAfterSearch === 0
-      res.render('index', { restaurants: restaurantsAfterSearch, keyword, isFind })
+      const isNotFind = restaurantsAfterSearch.length === 0
+      res.render('index', { restaurants: restaurantsAfterSearch, keyword, isNotFind })
     })
     .catch(error => console.error(error))
 })

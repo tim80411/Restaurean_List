@@ -5,10 +5,15 @@
         <span><strong>類別： </strong>{{ restaurant.category }}</span>
       </div>
       <div>
-        <span><strong>地址： </strong><a href="https://goo.gl/maps/BJdmLuVdDbw">{{ restaurant.location }}</a></span>
+        <span>
+          <strong>地址： </strong>
+          <a {{#if isFindGoogleMap}}href="{{ restaurant.google_map }}"{{/if}} target="_blank">
+            {{ restaurant.location }}
+          </a>
+        </span>
       </div>
       <div>
-        <span><strong>電話： </strong><a href="tel:02 2363 8009">{{ restaurant.phone }}</a></span>
+        <span><strong>電話： </strong><a href="tel:{{ restaurant.phone }}">{{ restaurant.phone }}</a></span>
       </div>
     </div>
   </div>
@@ -17,7 +22,7 @@
       <p>
         {{ restaurant.description }}
       </p>
-      <img src={{ restaurant.image }} alt="" class="img-fluid" >
+      <img src={{ restaurant.image }} alt="" class="img-fluid">
     </div>
   </div>
 </div>
