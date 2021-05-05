@@ -1,5 +1,5 @@
 <div class="container my-4">
-  <form action="/restaurants/{{ id }}/edit" method="POST" class="needs-validation" novalidate>
+  <form action="/restaurants/{{ id }}?_method=PUT" method="POST" class="needs-validation" novalidate>
     <div class="form-group">
       <label for="name">店名Name</label>
       <input type="text" class="form-control" id="Name" name="name" placeholder="ex: 日出早午餐中和店" value="{{ restaurant.name }}" required>
