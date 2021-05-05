@@ -4,9 +4,14 @@
     <div class="col-12 mt-5">
       <form action="/search" method='get'>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search..." name="keyword" value={{ keyword }}>
+          <input type="search" class="form-control" placeholder="請輸入店名..." name="keyword" value={{ keyword }}>
           <button type="submit" class="btn btn-primary">Search</button>
         </div>
+        {{#if isNotFind}}
+        <div>
+          <small style="color: red;">未搜尋到該間店名，請重新輸入</small>
+        </div>
+        {{/if}}
       </form>
     </div>
   </div>
