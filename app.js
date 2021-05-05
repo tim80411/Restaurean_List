@@ -71,9 +71,6 @@ app.get('/restaurants/:restaurant_id/edit', (req, res) => {
   return Restaurant.findById(id)
     .lean()
     .then(restaurant => {
-      for (let key in restaurant) {
-        restaurant[key] = restaurant[key].toString().split(' ').join('')
-      }
       res.render('edit', { id, restaurant })
     })
     .catch(error => console.error(error))
