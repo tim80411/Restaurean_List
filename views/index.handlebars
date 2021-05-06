@@ -1,7 +1,7 @@
 <div class="container">
-  {{!-- serach bar --}}
-  <div class="row" id="search-bar">
-    <div class="col-12 mt-5">
+  <div class="row d-flex justify-content-between mt-5">
+    {{!-- serach bar --}}
+    <div class="col-5">
       <form action="/search" method='get'>
         <div class="input-group">
           <input type="search" class="form-control" placeholder="請輸入店名..." name="keyword" value={{ keyword }}>
@@ -14,16 +14,30 @@
         {{/if}}
       </form>
     </div>
+    <div class="col-3" style="width: 7vw;">
+      <form class="" action="/sort">
+        <div class="form-group">
+          <select class="form-control" name="sort" id="sort" onchange="this.form.submit()">
+            <option value="name" disabled selected>排序</option>
+            <option value="name" {{#if (eq sortPattern 'name' )}} selected {{/if}}>A-Z</option>
+            <option value="-name" {{#if (eq sortPattern '-name' )}} selected {{/if}}>Z-A</option>
+            <option value="category" {{#if (eq sortPattern 'category' )}} selected {{/if}}>類別</option>
+            <option value="location" {{#if (eq sortPattern 'nalocationme' )}} selected {{/if}}>地區</option>
+            <option value="_id" {{#if (eq sortPattern 'nam_ide' )}} selected {{/if}}>新增時間</option>
+          </select>
+        </div>
+      </form>
+    </div>
   </div>
 
   {{!-- restaurant card below --}}
   <div class="row" id="restaurant-cards">
-    <div class="col-md-10 col-12 mx-auto">
+    <div class="col-12 mx-auto">
       <div class="card-columns mt-3">
         {{#each restaurants}}
         <a href="/restaurants/{{ this._id }}/detail" class="text-dark">
           <div class="card mb-4 shadow rounded rounded-large">
-            <img class="card-img-top rounded rounded-large" style="height: 130px" src={{ this.image }}>
+            <img class="card-img-top rounded rounded-large" style="height: 170px" src={{ this.image }}>
             <div class="card-body">
               <h5 class="card-title">{{ this.name }}</h5>
               <div class="row">

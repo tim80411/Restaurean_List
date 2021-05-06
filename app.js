@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const router = require('./routes')
+const hbshelper = require('./config/helper')
 
 const app = express()
 const port = 3000
@@ -22,7 +23,10 @@ db.once('open', () => {
 })
 
 // set up view engine
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  helpers: hbshelper
+}))
 app.set('view engine', 'handlebars')
 
 // set up post encoded
