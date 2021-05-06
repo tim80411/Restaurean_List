@@ -3,7 +3,7 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
-const Restaurant = require('./models/restaurant')
+const router = require('./routes')
 
 const app = express()
 const port = 3000
@@ -32,95 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(methodOverride('_method'))
 
-// route: index
-app.get('/', (req, res) => {
-  return Restaurant.find()
-    .lean()
-    .then(restaurants => res.render('index', { restaurants }))
-})
-
-// route: Add restaurant function
-app.get('/restaurants/new', (req, res) => {
-  res.render('new')
-})
-
-app.post('/restaurants', (req, res) => {
-  const { name, name_en, category, image, location, phone, google_map, rating, description } = req.body
-
-  return Restaurant.create({
-    name, name_en, category, image, location, phone, google_map, rating, description
-  })
-    .then(() => res.redirect('/'))
-    .catch(error => console.error(error))
-})
-
-//route: detail
-app.get('/restaurants/:restaurant_id/detail', (req, res) => {
-  const id = req.params.restaurant_id
-
-  return Restaurant.findById(id)
-    .lean()
-    .then(restaurant => {
-      const isFindGoogleMap = restaurant.google_map
-      res.render('show', { restaurant, isFindGoogleMap })
-    })
-    .catch(error => console.error(error))
-})
-
-// route: update restaurant function
-app.get('/restaurants/:restaurant_id/edit', (req, res) => {
-  const id = req.params.restaurant_id
-  return Restaurant.findById(id)
-    .lean()
-    .then(restaurant => {
-      // restaurant.phone = Number(restaurant.phone)
-      res.render('edit', { id, restaurant })
-    })
-    .catch(error => console.error(error))
-})
-
-app.put('/restaurants/:restaurant_id', (req, res) => {
-  const id = req.params.restaurant_id
-  return Restaurant.findById(id)
-    .then(restaurant => {
-      restaurant.name = req.body.name
-      restaurant.name_en = req.body.name_en
-      restaurant.category = req.body.category
-      restaurant.image = req.body.image
-      restaurant.location = req.body.location
-      restaurant.phone = req.body.phone
-      restaurant.google_map = req.body.google_map
-      restaurant.rating = Number(req.body.rating)
-      restaurant.description = req.body.description
-
-      return restaurant.save()
-    })
-    .then(() => res.redirect(`/restaurants/${id}/detail`))
-    .catch(error => console.error(error))
-})
-
-// route: delete restaurant function
-app.delete('/restaurants/:restaurant_id', (req, res) => {
-  const id = req.params.restaurant_id
-  return Restaurant.findByIdAndRemove(id)
-    .then(() => res.redirect('/'))
-    .catch(error => console.error(error))
-})
-
-// search route
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-
-  return Restaurant.find()
-    .lean()
-    .then(restaurants => {
-      const restaurantsAfterSearch = restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()))
-      const isNotFind = restaurantsAfterSearch.length === 0
-      res.render('index', { restaurants: restaurantsAfterSearch, keyword, isNotFind })
-    })
-    .catch(error => console.error(error))
-})
-
+app.use(router)
 
 app.listen(port, () => {
   console.log(`Listen to the http://localhost:${port}`)
