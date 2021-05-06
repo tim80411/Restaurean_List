@@ -1,7 +1,6 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const router = require('./routes')
 const hbshelper = require('./config/helper')
@@ -9,18 +8,7 @@ const hbshelper = require('./config/helper')
 const app = express()
 const port = 3000
 
-// connect mongodb and set up db's listener
-mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
-
-const db = mongoose.connection
-
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-
-db.once('open', () => {
-  console.log('mongodb sucess!')
-})
+require('./config/mongoose')
 
 // set up view engine
 app.engine('handlebars', exphbs({
