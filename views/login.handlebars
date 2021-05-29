@@ -1,0 +1,19 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-6 m-auto">
+      <form class="card card-body" action="/users/login" method="post">
+        <div class="form-group">
+          <label for="email">Email*</label>
+          <input type="email" name="email" id="email" class="form-control" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password*</label>
+          <input type="password" name="password" id="password" class="form-control" placeholder="Enter password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+        <a href="/auth/facebook" class="btn btn-info btn-block">Facebook Login</a>
+        <p class="lead mt-4">No Account?<a href="/users/register">Register</a></p>
+      </form>
+    </div>
+  </div>
+</div>
