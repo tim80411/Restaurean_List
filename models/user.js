@@ -3,7 +3,6 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema({
   name: {
     type: String,
-    require: true
   },
   email: {
     type: String,
@@ -13,11 +12,7 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    match: [/^[^\u4e00-\u9fa5]{6,10}$/],
-    require: true,
-    trim: true,
-    minlength: [6, 'you should use at least six character for password'],
-    maxlength: 10
+    require: true
   },
   createdAt: {
     type: Date,
