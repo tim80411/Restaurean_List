@@ -5,7 +5,8 @@ const router = express.Router()
 
 // route: index
 router.get('/', (req, res) => {
-  return Restaurant.find()
+  const userId = req.user._id
+  return Restaurant.find({userId})
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
 })
