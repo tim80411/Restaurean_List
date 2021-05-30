@@ -1,5 +1,6 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+const session = require('express-session')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
@@ -24,6 +25,13 @@ app.set('view engine', 'handlebars')
 
 // set up post encoded
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// session
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true
+}))
 
 // include static file
 app.use(express.static('public'))
