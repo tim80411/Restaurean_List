@@ -27,7 +27,12 @@
           </li>
         </ul>
       </div>
+      {{#if isAuthenticated}}
+      <a class="btn btn-primary" href="/users/logout">logout</a>
+      {{else}}
       <a class="btn btn-primary" href="/users/login">login</a>
+      {{/if}}
+
     </div>
   </nav>
   {{!-- partial templates --}}
