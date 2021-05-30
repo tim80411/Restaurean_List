@@ -10,6 +10,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const router = require('./routes')
 const hbshelper = require('./config/helper')
+const usePassport = require('./config/passport')
 
 const app = express()
 const port = 3000
@@ -36,6 +37,8 @@ app.use(session({
 // include static file
 app.use(express.static('public'))
 app.use(methodOverride('_method'))
+
+usePassport(app)
 
 app.use(router)
 
