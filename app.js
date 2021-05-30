@@ -14,7 +14,7 @@ const hbshelper = require('./config/helper')
 const usePassport = require('./config/passport')
 
 const app = express()
-const port = 3000
+const PORT = process.env.PORT
 
 require('./config/mongoose')
 
@@ -53,6 +53,6 @@ app.use((req, res, next) => {
 
 app.use(router)
 
-app.listen(port, () => {
-  console.log(`Listen to the http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`Listen to the http://localhost:${PORT}`)
 })
